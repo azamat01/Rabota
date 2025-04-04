@@ -23,13 +23,13 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for data_bus
-      working-directory: Rabota/microservices_project/data_bus/app.py
+      working-directory: Rabota/microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+       
 
     - name: Run tests for data_bus
-      working-directory: Rabota/microservices_project/data_bus/app.py
+      working-directory: Rabota/microservices_project/data_bus
       run: |
         pytest  # или другой тестировщик
 
@@ -47,13 +47,13 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for order_service
-      working-directory: Rabota/microservices_project/order_service/app.py
+      working-directory: Rabota/microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        
 
     - name: Run tests for order_service
-      working-directory: Rabota/microservices_project/order_service/app.py
+      working-directory: Rabota/microservices_project/order_service
       run: |
         pytest  # или другой тестировщик
 
@@ -71,12 +71,12 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for user_service
-      working-directory: Rabota/microservices_project/user_service/app.py
+      working-directory: Rabota/microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      
 
     - name: Run tests for user_service
-      working-directory: Rabota/microservices_project/user_service/app.py
+      working-directory: Rabota/microservices_project/user_service
       run: |
         pytest  # или другой тестировщик
