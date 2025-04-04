@@ -1,0 +1,26 @@
+[
+    {
+        "id": "c92e8f3b-1319-44c9-95de-8ca09c5b0768",
+        "username": "6",
+        "item_id": 6,
+        "status": "Accepted"
+    },
+    {
+        "id": "8ac39aeb-bd19-4d68-8c50-ad7bf7b23b9e",
+        "username": "78",
+        "item_id": 6,
+        "status": "Accepted"
+    },
+    {
+        "id": "2d45f493-dfcf-4615-98a6-290877cefe4c",
+        "username": "5",
+        "item_id": 5,
+        "status": "Accepted"
+    },
+    {
+        "id": "a88fc8c6-4365-4d88-a086-3fb82e1afd19",
+        "username": "gwfw",
+        "item_id": 10,
+        "status": "Rejected"
+    }
+]

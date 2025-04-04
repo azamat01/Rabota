@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            margin: 5px 0;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+        }
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create an Order</h1>
+    <form id="orderForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="item_id">Item ID:</label>
+        <input type="number" id="item_id" name="item_id" required><br><br>
+        
+        <button type="submit">Create Order</button>
+    </form>
+
+    <h2>Orders</h2>
+    <ul id="ordersList"></ul>
+
+    <h2>Order Response</h2>
+    <form id="responseForm">
+        <label for="order_id">Order ID:</label>
+        <input type="number" id="order_id" name="order_id" required><br><br>
+        
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Pending">Pending</option>
+        </select><br><br>
+        
+        <button type="submit">Update Order Status</button>
+    </form>
+
+    <script>
+        // Получаем список заказов при загрузке страницы
+        function fetchOrders() {
+            fetch('http://localhost:5003/orders')
+                .then(response => response.json())
+                .then(data => {
+                    const ordersList = document.getElementById('ordersList');
+                    ordersList.innerHTML = '';  // Очищаем текущий список
+
+                    data.orders.forEach((order, index) => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `Order #${index} - Username: ${order.username}, Item ID: ${order.item_id} - Status: <span class="status">${order.status}</span>`;
+                        ordersList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error fetching orders:', error));
+        }
+
+        // Отправка данных формы для создания заказа
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const item_id = document.getElementById('item_id').value;
+
+            fetch('http://localhost:5003/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, item_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchOrders();  // Обновляем список заказов после добавления нового
+            })
+            .catch(error => console.error('Error creating order:', error));
+        });
+
+        // Отправка данных формы для обновления статуса заказа
+        document.getElementById('responseForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const order_id = document.getElementById('order_id').value;
+            const status = document.getElementById('status').value;
+
+            fetch('http://localhost:5003/order/response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ order_id, status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchOrders();  // Обновляем список заказов после изменения статуса
+            })
+            .catch(error => console.error('Error updating order status:', error));
+        });
+
+        // Загружаем список заказов при запуске
+        window.onload = fetchOrders;
+    </script>
+</body>
+</html>

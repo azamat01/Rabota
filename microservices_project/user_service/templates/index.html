@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Service - Order Responses</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1, h2 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        form { margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select { padding: 8px; width: 200px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Order Responses</h1>
+
+    <h2>New Orders</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Username</th>
+                <th>Item ID</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order['id'] }}</td>
+                <td>{{ order['username'] }}</td>
+                <td>{{ order['item_id'] }}</td>
+                <td>{{ order['status'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Update Order Status</h2>
+    <form id="statusForm">
+        <label for="order_id">Order ID:</label>
+        <input type="text" id="order_id" name="order_id" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Pending">Pending</option>
+        </select>
+
+        <button type="submit">Update Status</button>
+    </form>
+
+    <script>
+        // Функция для отправки данных в ордер-сервис через AJAX
+        document.getElementById('statusForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Останавливаем стандартную отправку формы
+
+            const orderId = document.getElementById('order_id').value;
+            const status = document.getElementById('status').value;
+
+            const data = {
+                order_id: orderId,
+                status: status
+            };
+
+            // Отправляем данные на сервер через fetch API
+            fetch('/order/response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)  // Данные отправляются в формате JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // Покажем сообщение пользователю
+            })
+            .catch(error => {
+                alert('Error updating status: ' + error);
+            });
+        });
+    </script>
+</body>
+</html>
