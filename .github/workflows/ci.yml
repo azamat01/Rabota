@@ -16,6 +16,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for data_bus
       uses: actions/setup-python@v2
@@ -23,15 +25,15 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for data_bus
-      working-directory: Rabota/microservices_project/data_bus
+      working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-       
+        pip install -e .  # Установка зависимостей из репозитория
 
     - name: Run tests for data_bus
-      working-directory: Rabota/microservices_project/data_bus
+      working-directory: ./microservices_project/data_bus
       run: |
-        pytest  # или другой тестировщик
+        pytest  # Запуск тестов для data_bus
 
   # Job для order_service
   order_service:
@@ -40,6 +42,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for order_service
       uses: actions/setup-python@v2
@@ -47,15 +51,15 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for order_service
-      working-directory: Rabota/microservices_project/order_service
+      working-directory: ./microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        
+        pip install -e .  # Установка зависимостей из репозитория
 
     - name: Run tests for order_service
-      working-directory: Rabota/microservices_project/order_service
+      working-directory: ./microservices_project/order_service
       run: |
-        pytest  # или другой тестировщик
+        pytest  # Запуск тестов для order_service
 
   # Job для user_service
   user_service:
@@ -64,6 +68,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for user_service
       uses: actions/setup-python@v2
@@ -71,12 +77,12 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies for user_service
-      working-directory: Rabota/microservices_project/user_service
+      working-directory: ./microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-      
+        pip install -e .  # Установка зависимостей из репозитория
 
     - name: Run tests for user_service
-      working-directory: Rabota/microservices_project/user_service
+      working-directory: ./microservices_project/user_service
       run: |
-        pytest  # или другой тестировщик
+        pytest  # Запуск тестов для user_service
