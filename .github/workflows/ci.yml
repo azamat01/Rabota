@@ -11,7 +11,7 @@ on:
 jobs:
   # Job для data_bus
   data_bus:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
