@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -37,12 +37,12 @@ jobs:
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        # Здесь вы можете добавить команду сборки, например для Docker
+        # Здесь можно добавить команду сборки, например для Docker
         # docker build -t my_image .
         echo "Build step for data_bus"  # Здесь может быть ваш код сборки, например для Python или Docker
 
     - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Использование последней стабильной версии actions/upload-artifact
       with:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам, которые вы хотите сохранить
@@ -53,10 +53,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for order_service
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -79,7 +79,7 @@ jobs:
         echo "Build step for order_service"  # Ваш код сборки
 
     - name: Publish build artifacts for order_service
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Использование последней стабильной версии actions/upload-artifact
       with:
         name: order_service-artifacts
         path: ./microservices_project/order_service/build  # Путь к артефактам для order_service
@@ -90,10 +90,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for user_service
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -116,7 +116,7 @@ jobs:
         echo "Build step for user_service"  # Ваш код сборки
 
     - name: Publish build artifacts for user_service
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Использование последней стабильной версии actions/upload-artifact
       with:
         name: user_service-artifacts
         path: ./microservices_project/user_service/build  # Путь к артефактам для user_service
