@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for data_bus
       uses: actions/setup-python@v2
@@ -36,6 +34,19 @@ jobs:
       run: |
         pytest  # Запуск тестов для data_bus
 
+    - name: Build application for data_bus
+      working-directory: ./microservices_project/data_bus
+      run: |
+        # Здесь вы можете добавить команду сборки, например для Docker
+        # docker build -t my_image .
+        echo "Build step for data_bus"  # Здесь может быть ваш код сборки, например для Python или Docker
+
+    - name: Publish build artifacts for data_bus
+      uses: actions/upload-artifact@v2
+      with:
+        name: data_bus-artifacts
+        path: ./microservices_project/data_bus/build  # Путь к артефактам, которые вы хотите сохранить
+
   # Job для order_service
   order_service:
     runs-on: ubuntu-latest
@@ -43,8 +54,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for order_service
       uses: actions/setup-python@v2
@@ -63,6 +72,18 @@ jobs:
       run: |
         pytest  # Запуск тестов для order_service
 
+    - name: Build application for order_service
+      working-directory: ./microservices_project/order_service
+      run: |
+        # Пример команды для сборки
+        echo "Build step for order_service"  # Ваш код сборки
+
+    - name: Publish build artifacts for order_service
+      uses: actions/upload-artifact@v2
+      with:
+        name: order_service-artifacts
+        path: ./microservices_project/order_service/build  # Путь к артефактам для order_service
+
   # Job для user_service
   user_service:
     runs-on: ubuntu-latest
@@ -70,8 +91,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
     - name: Set up Python for user_service
       uses: actions/setup-python@v2
@@ -89,3 +108,15 @@ jobs:
       working-directory: ./microservices_project/user_service
       run: |
         pytest  # Запуск тестов для user_service
+
+    - name: Build application for user_service
+      working-directory: ./microservices_project/user_service
+      run: |
+        # Пример команды для сборки
+        echo "Build step for user_service"  # Ваш код сборки
+
+    - name: Publish build artifacts for user_service
+      uses: actions/upload-artifact@v2
+      with:
+        name: user_service-artifacts
+        path: ./microservices_project/user_service/build  # Путь к артефактам для user_service
