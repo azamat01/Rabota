@@ -6,7 +6,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         # Добавьте сюда все необходимые зависимости для этого микросервиса
+        "pytest",
         "requests",  # Например, добавьте requests, если он используется
         "flask",     # Пример для Flask
+
     ],
 )
