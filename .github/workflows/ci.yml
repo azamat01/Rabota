@@ -22,11 +22,11 @@ jobs:
       with:
         python-version: '3.8'
 
-    - name: Install dependencies for data_bus
+    - name: Install pytest for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install .  # Установка зависимостей из setup.py
+        pip install pytest  # Установка pytest вручную
 
     - name: Run tests for data_bus
       working-directory: ./microservices_project/data_bus
@@ -57,11 +57,11 @@ jobs:
       with:
         python-version: '3.8'
 
-    - name: Install dependencies for order_service
+    - name: Install pytest for order_service
       working-directory: ./microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        pip install .  # Установка зависимостей из setup.py
+        pip install pytest  # Установка pytest вручную
 
     - name: Run tests for order_service
       working-directory: ./microservices_project/order_service
@@ -92,11 +92,11 @@ jobs:
       with:
         python-version: '3.8'
 
-    - name: Install dependencies for user_service
+    - name: Install pytest for user_service
       working-directory: ./microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-        pip install .  # Установка зависимостей из setup.py
+        pip install pytest  # Установка pytest вручную
 
     - name: Run tests for user_service
       working-directory: ./microservices_project/user_service
