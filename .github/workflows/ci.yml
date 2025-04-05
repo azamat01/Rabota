@@ -36,18 +36,14 @@ jobs:
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        mkdir -p build  # Если папка build не существует, создаем ее
-        echo "Build step for data_bus" > build/output.txt  # Записываем данные в build/output.txt
-
-    - name: List files in build directory for data_bus  # Логирование содержимого build
-      run: |
-        ls -la ./microservices_project/data_bus/build  # Выводим содержимое папки build
+        mkdir -p build  # Создаем папку build, если она не существует
+        echo "Build step for data_bus" > build/output.txt  # Записываем артефакт в build/output.txt
 
     - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
       with:
         name: data_bus-artifacts
-        path: ./microservices_project/data_bus/build/output.txt  # Указываем точный путь к артефактам
+        path: ./microservices_project/data_bus/build/output.txt  # Путь к артефактам
 
   # Job для order_service
   order_service:
@@ -76,18 +72,14 @@ jobs:
     - name: Build application for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        mkdir -p build  # Если папка build не существует, создаем ее
-        echo "Build step for order_service" > build/output.txt  # Записываем данные в build/output.txt
-
-    - name: List files in build directory for order_service  # Логирование содержимого build
-      run: |
-        ls -la ./microservices_project/order_service/build  # Выводим содержимое папки build
+        mkdir -p build  # Создаем папку build, если она не существует
+        echo "Build step for order_service" > build/output.txt  # Записываем артефакт в build/output.txt
 
     - name: Publish build artifacts for order_service
-      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
       with:
         name: order_service-artifacts
-        path: ./microservices_project/order_service/build/output.txt  # Указываем точный путь к артефактам для order_service
+        path: ./microservices_project/order_service/build/output.txt  # Путь к артефактам для order_service
 
   # Job для user_service
   user_service:
@@ -116,15 +108,11 @@ jobs:
     - name: Build application for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        mkdir -p build  # Если папка build не существует, создаем ее
-        echo "Build step for user_service" > build/output.txt  # Записываем данные в build/output.txt
-
-    - name: List files in build directory for user_service  # Логирование содержимого build
-      run: |
-        ls -la ./microservices_project/user_service/build  # Выводим содержимое папки build
+        mkdir -p build  # Создаем папку build, если она не существует
+        echo "Build step for user_service" > build/output.txt  # Записываем артефакт в build/output.txt
 
     - name: Publish build artifacts for user_service
-      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
       with:
         name: user_service-artifacts
-        path: ./microservices_project/user_service/build/output.txt  # Указываем точный путь к артефактам для user_service
+        path: ./microservices_project/user_service/build/output.txt  # Путь к артефактам для user_service
