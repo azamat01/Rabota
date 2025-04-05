@@ -9,7 +9,6 @@ on:
       - main
 
 jobs:
-  # Job для data_bus
   data_bus:
     runs-on: ubuntu-20.04
 
@@ -37,15 +36,14 @@ jobs:
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        echo "Build step for data_bus"  # Ваш код сборки
+        echo "Build step for data_bus"  # Замените на реальную команду сборки, если необходимо
 
     - name: Publish build artifacts for data_bus
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: data_bus-artifacts
-        path: ./microservices_project/data_bus/build  # Путь к артефактам
+        path: ./microservices_project/data_bus/build  # Убедитесь, что путь правильный
 
-  # Job для order_service
   order_service:
     runs-on: ubuntu-latest
 
@@ -73,15 +71,14 @@ jobs:
     - name: Build application for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        echo "Build step for order_service"  # Ваш код сборки
+        echo "Build step for order_service"  # Замените на реальную команду сборки, если необходимо
 
     - name: Publish build artifacts for order_service
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: order_service-artifacts
-        path: ./microservices_project/order_service/build  # Путь к артефактам для order_service
+        path: ./microservices_project/order_service/build  # Убедитесь, что путь правильный
 
-  # Job для user_service
   user_service:
     runs-on: ubuntu-latest
 
@@ -109,10 +106,10 @@ jobs:
     - name: Build application for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        echo "Build step for user_service"  # Ваш код сборки
+        echo "Build step for user_service"  # Замените на реальную команду сборки, если необходимо
 
     - name: Publish build artifacts for user_service
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: user_service-artifacts
-        path: ./microservices_project/user_service/build  # Путь к артефактам для user_service
+        path: ./microservices_project/user_service/build  # Убедитесь, что путь правильный
