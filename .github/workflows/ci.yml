@@ -54,7 +54,7 @@ jobs:
         ls -al ./microservices_project/data_bus/build  # Проверяем содержимое build
 
     - name: Upload build artifacts for data_bus
-      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
+      uses: actions/upload-artifact@v3  # Использование последней версии actions/upload-artifact v3
       with:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
