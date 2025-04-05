@@ -39,6 +39,12 @@ jobs:
       run: |
         echo "Build step for data_bus"  # Ваш код сборки
 
+    - name: Create test build artifact
+      working-directory: ./microservices_project/data_bus
+      run: |
+        mkdir -p ./build
+        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
+
     - name: Upload build artifacts for data_bus
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
@@ -75,6 +81,12 @@ jobs:
       run: |
         echo "Build step for order_service"  # Ваш код сборки
 
+    - name: Create test build artifact
+      working-directory: ./microservices_project/order_service
+      run: |
+        mkdir -p ./build
+        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
+
     - name: Upload build artifacts for order_service
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
@@ -110,6 +122,12 @@ jobs:
       working-directory: ./microservices_project/user_service
       run: |
         echo "Build step for user_service"  # Ваш код сборки
+
+    - name: Create test build artifact
+      working-directory: ./microservices_project/user_service
+      run: |
+        mkdir -p ./build
+        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
 
     - name: Upload build artifacts for user_service
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
