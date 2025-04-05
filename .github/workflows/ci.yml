@@ -9,15 +9,16 @@ on:
       - main
 
 jobs:
+  # Job для data_bus
   data_bus:
-    runs-on: ubuntu-latest  # Используем актуальный runner
+    runs-on: ubuntu-latest  # Используйте актуальный runner
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -25,33 +26,35 @@ jobs:
       working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Устанавливаем зависимости
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
 
     - name: Run tests for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        pytest  # Запускаем тесты
+        pytest  # Запуск тестов для data_bus
 
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
         echo "Build step for data_bus"  # Ваш код сборки
 
-    - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v3  # Используем последнюю стабильную версию
+    - name: Upload build artifacts for data_bus
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
 
+  # Job для order_service
   order_service:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Используйте актуальный runner
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for order_service
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -59,34 +62,35 @@ jobs:
       working-directory: ./microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install pytest
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
 
     - name: Run tests for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        pytest
+        pytest  # Запуск тестов для order_service
 
     - name: Build application for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        echo "Build step for order_service"
+        echo "Build step for order_service"  # Ваш код сборки
 
-    - name: Publish build artifacts for order_service
-      uses: actions/upload-artifact@v3
+    - name: Upload build artifacts for order_service
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: order_service-artifacts
-        path: ./microservices_project/order_service/build
+        path: ./microservices_project/order_service/build  # Путь к артефактам
 
+  # Job для user_service
   user_service:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Используйте актуальный runner
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for user_service
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -94,21 +98,21 @@ jobs:
       working-directory: ./microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install pytest
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
 
     - name: Run tests for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        pytest
+        pytest  # Запуск тестов для user_service
 
     - name: Build application for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        echo "Build step for user_service"
+        echo "Build step for user_service"  # Ваш код сборки
 
-    - name: Publish build artifacts for user_service
-      uses: actions/upload-artifact@v3
+    - name: Upload build artifacts for user_service
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: user_service-artifacts
-        path: ./microservices_project/user_service/build
+        path: ./microservices_project/user_service/build  # Путь к артефактам
