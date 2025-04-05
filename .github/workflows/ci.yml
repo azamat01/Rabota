@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней версии checkout
+      uses: actions/checkout@v2  # Проверенная версия для checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3  # Использование последней версии setup-python
+      uses: actions/setup-python@v2  # Использование v2 для setup-python
       with:
         python-version: '3.8'
 
@@ -26,48 +26,35 @@ jobs:
       working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
+        pip install pytest  # Устанавливаем pytest для тестов
 
     - name: Run tests for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
         pytest  # Запуск тестов для data_bus
 
-    - name: Verify working directory and current path
+    - name: Build application for data_bus
+      working-directory: ./microservices_project/data_bus
       run: |
-        echo "Current working directory:"
-        pwd  # Печатает текущую директорию
-        echo "Listing files in current directory:"
-        ls -al  # Печатает список файлов в текущей директории
+        mkdir -p build  # Если папка build не существует, создаем ее
+        echo "Build step for data_bus" > build/output.txt  # Пример записи в build
 
-    - name: Create build directory for data_bus
-      run: |
-        echo "Creating build directory..."
-        mkdir -p ./microservices_project/data_bus/build  # Создаём build директорию
-        echo "Creating test file inside build directory..."
-        echo "test artifact" > ./microservices_project/data_bus/build/test_file.txt  # Создаём тестовый файл
-
-    - name: Verify build directory contents
-      run: |
-        echo "Listing contents of build directory:"
-        ls -al ./microservices_project/data_bus/build  # Проверяем содержимое build
-
-    - name: Upload build artifacts for data_bus
-      uses: actions/upload-artifact@v3  # Использование последней версии actions/upload-artifact v3
+    - name: Publish build artifacts for data_bus
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
       with:
         name: data_bus-artifacts
-        path: ./microservices_project/data_bus/build  # Путь к артефактам
+        path: ./microservices_project/data_bus/build/output.txt  # Указываем путь к артефактам
 
-  # Аналогичные шаги для order_service и user_service
+  # Job для order_service
   order_service:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2  # Использование v2 для checkout
 
     - name: Set up Python for order_service
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2  # Использование v2 для setup-python
       with:
         python-version: '3.8'
 
@@ -75,40 +62,35 @@ jobs:
       working-directory: ./microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install pytest
+        pip install pytest  # Устанавливаем pytest для тестов
 
     - name: Run tests for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        pytest
+        pytest  # Запуск тестов для order_service
 
-    - name: Create build directory for order_service
+    - name: Build application for order_service
+      working-directory: ./microservices_project/order_service
       run: |
-        echo "Creating build directory..."
-        mkdir -p ./microservices_project/order_service/build
-        echo "Creating test file inside build directory..."
-        echo "test artifact" > ./microservices_project/order_service/build/test_file.txt
+        mkdir -p build  # Если папка build не существует, создаем ее
+        echo "Build step for order_service" > build/output.txt  # Пример записи в build
 
-    - name: Verify build directory contents
-      run: |
-        echo "Listing contents of build directory:"
-        ls -al ./microservices_project/order_service/build
-
-    - name: Upload build artifacts for order_service
-      uses: actions/upload-artifact@v3
+    - name: Publish build artifacts for order_service
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
       with:
         name: order_service-artifacts
-        path: ./microservices_project/order_service/build
+        path: ./microservices_project/order_service/build/output.txt  # Указываем путь к артефактам для order_service
 
+  # Job для user_service
   user_service:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2  # Использование v2 для checkout
 
     - name: Set up Python for user_service
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2  # Использование v2 для setup-python
       with:
         python-version: '3.8'
 
@@ -116,28 +98,21 @@ jobs:
       working-directory: ./microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install pytest
+        pip install pytest  # Устанавливаем pytest для тестов
 
     - name: Run tests for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        pytest
+        pytest  # Запуск тестов для user_service
 
-    - name: Create build directory for user_service
+    - name: Build application for user_service
+      working-directory: ./microservices_project/user_service
       run: |
-        echo "Creating build directory..."
-        mkdir -p ./microservices_project/user_service/build
-        echo "Creating test file inside build directory..."
-        echo "test artifact" > ./microservices_project/user_service/build/test_file.txt
+        mkdir -p build  # Если папка build не существует, создаем ее
+        echo "Build step for user_service" > build/output.txt  # Пример записи в build
 
-    - name: Verify build directory contents
-      run: |
-        echo "Listing contents of build directory:"
-        ls -al ./microservices_project/user_service/build
-
-    - name: Upload build artifacts for user_service
-      uses: actions/upload-artifact@v3
+    - name: Publish build artifacts for user_service
+      uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact v2
       with:
         name: user_service-artifacts
-        path: ./microservices_project/user_service/build
+        path: ./microservices_project/user_service/build/output.txt  # Указываем путь к артефактам для user_service
