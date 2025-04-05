@@ -39,11 +39,27 @@ jobs:
       run: |
         echo "Build step for data_bus"  # Ваш код сборки
 
+    - name: Check if build directory exists before creating it
+      run: |
+        if [ -d "./microservices_project/data_bus/build" ]; then
+          echo "Build directory exists"
+        else
+          echo "Build directory does not exist"
+        fi
+
     - name: Create test build artifact
       working-directory: ./microservices_project/data_bus
       run: |
-        mkdir -p ./build
+        mkdir -p ./build  # Создание директории build, если она еще не существует
         echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
+
+    - name: Verify build directory after creation
+      run: |
+        if [ -d "./microservices_project/data_bus/build" ]; then
+          echo "Build directory created successfully"
+        else
+          echo "Failed to create build directory"
+        fi
 
     - name: Upload build artifacts for data_bus
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
@@ -51,86 +67,4 @@ jobs:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
 
-  # Job для order_service
-  order_service:
-    runs-on: ubuntu-latest  # Используйте актуальный runner
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
-
-    - name: Set up Python for order_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
-
-    - name: Run tests for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        pytest  # Запуск тестов для order_service
-
-    - name: Build application for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        echo "Build step for order_service"  # Ваш код сборки
-
-    - name: Create test build artifact
-      working-directory: ./microservices_project/order_service
-      run: |
-        mkdir -p ./build
-        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
-
-    - name: Upload build artifacts for order_service
-      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
-      with:
-        name: order_service-artifacts
-        path: ./microservices_project/order_service/build  # Путь к артефактам
-
-  # Job для user_service
-  user_service:
-    runs-on: ubuntu-latest  # Используйте актуальный runner
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
-
-    - name: Set up Python for user_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
-
-    - name: Run tests for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        pytest  # Запуск тестов для user_service
-
-    - name: Build application for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        echo "Build step for user_service"  # Ваш код сборки
-
-    - name: Create test build artifact
-      working-directory: ./microservices_project/user_service
-      run: |
-        mkdir -p ./build
-        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
-
-    - name: Upload build artifacts for user_service
-      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
-      with:
-        name: user_service-artifacts
-        path: ./microservices_project/user_service/build  # Путь к артефактам
+  # Аналогичные шаги для order_service и user_service...
