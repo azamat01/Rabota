@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
       with:
         python-version: '3.8'
 
@@ -37,17 +37,13 @@ jobs:
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        mkdir -p ./build  # Создание папки build, если её нет
-        echo "Build step for data_bus" > ./build/build_output.txt  # Пример: сохраняем результат в build
+        echo "Build step for data_bus"  # Ваш код сборки
 
     - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Использование версии v3
       with:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
-
-  # Аналогичные шаги для других сервисов...
-
 
   # Job для order_service
   order_service:
