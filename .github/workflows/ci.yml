@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
+      uses: actions/checkout@v3
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
+      uses: actions/setup-python@v3
       with:
         python-version: '3.8'
 
@@ -26,28 +26,28 @@ jobs:
       working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
+        pip install -e .
+        pip install pytest
 
     - name: Run tests for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        pytest  # Запуск тестов для data_bus
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
+        pytest
 
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        echo "Build step for data_bus"  # Ваш код сборки
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
+        echo "Building application for data_bus"  # Команда сборки
+        # Например, создание архива с результатами
+        tar -czf data_bus_build.tar.gz ./microservices_project/data_bus  # Пример сборки
 
     - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v3  # Использование стабильной версии actions/upload-artifact v3
+      uses: actions/upload-artifact@v3
       with:
-        name: data_bus-artifacts
-        path: ./microservices_project/data_bus/build  # Путь к артефактам
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
+        name: data_bus-artifacts  # Имя артефакта
+        path: ./microservices_project/data_bus/data_bus_build.tar.gz  # Путь к артефактам
+
+  # Другие Jobs для других микросервисов (order_service, user_service) аналогичны.
 
   # Job для order_service
   order_service:
