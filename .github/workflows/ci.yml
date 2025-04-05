@@ -34,7 +34,7 @@ jobs:
         tar -czf app_build.tar.gz ./  # Архивируем текущий каталог
 
     - name: Publish build artifacts
-      uses: actions/upload-artifact@v3  # Загружаем артефакты с помощью actions/upload-artifact
+      uses: actions/upload-artifact@v2  # Используем стабильную версию actions/upload-artifact v2
       with:
         name: app-build-artifacts  # Имя артефакта
         path: app_build.tar.gz  # Путь к файлу артефакта
