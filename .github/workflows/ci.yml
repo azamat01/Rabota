@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
+      uses: actions/checkout@v2  # Используем стабильную версию actions/checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
+      uses: actions/setup-python@v2  # Используем стабильную версию actions/setup-python
       with:
         python-version: '3.8'
 
@@ -26,8 +26,7 @@ jobs:
       working-directory: ./microservices_project/data_bus
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
+        pip install .  # Установка зависимостей из setup.py
 
     - name: Run tests for data_bus
       working-directory: ./microservices_project/data_bus
@@ -51,10 +50,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
+      uses: actions/checkout@v2  # Используем стабильную версию actions/checkout
 
     - name: Set up Python for order_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
+      uses: actions/setup-python@v2  # Используем стабильную версию actions/setup-python
       with:
         python-version: '3.8'
 
@@ -62,8 +61,7 @@ jobs:
       working-directory: ./microservices_project/order_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
+        pip install .  # Установка зависимостей из setup.py
 
     - name: Run tests for order_service
       working-directory: ./microservices_project/order_service
@@ -87,10 +85,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
+      uses: actions/checkout@v2  # Используем стабильную версию actions/checkout
 
     - name: Set up Python for user_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
+      uses: actions/setup-python@v2  # Используем стабильную версию actions/setup-python
       with:
         python-version: '3.8'
 
@@ -98,8 +96,7 @@ jobs:
       working-directory: ./microservices_project/user_service
       run: |
         python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
+        pip install .  # Установка зависимостей из setup.py
 
     - name: Run tests for user_service
       working-directory: ./microservices_project/user_service
