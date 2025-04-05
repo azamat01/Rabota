@@ -11,14 +11,14 @@ on:
 jobs:
   # Job для data_bus
   data_bus:
-    runs-on: ubuntu-latest  # Используйте актуальный runner
+    runs-on: ubuntu-latest  # Используем актуальную версию Ubuntu
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
+      uses: actions/checkout@v3  # Использование последней версии checkout
 
     - name: Set up Python for data_bus
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
+      uses: actions/setup-python@v3  # Использование последней версии setup-python
       with:
         python-version: '3.8'
 
@@ -34,32 +34,24 @@ jobs:
       run: |
         pytest  # Запуск тестов для data_bus
 
-    - name: Build application for data_bus
-      working-directory: ./microservices_project/data_bus
+    - name: Verify working directory and current path
       run: |
-        echo "Build step for data_bus"  # Ваш код сборки
+        echo "Current working directory:"
+        pwd  # Печатает текущую директорию
+        echo "Listing files in current directory:"
+        ls -al  # Печатает список файлов в текущей директории
 
-    - name: Check if build directory exists before creating it
+    - name: Create build directory
       run: |
-        if [ -d "./microservices_project/data_bus/build" ]; then
-          echo "Build directory exists"
-        else
-          echo "Build directory does not exist"
-        fi
+        echo "Creating build directory..."
+        mkdir -p ./microservices_project/data_bus/build  # Создаём build директорию
+        echo "Creating test file inside build directory..."
+        echo "test artifact" > ./microservices_project/data_bus/build/test_file.txt  # Создаём тестовый файл
 
-    - name: Create test build artifact
-      working-directory: ./microservices_project/data_bus
+    - name: Verify build directory contents
       run: |
-        mkdir -p ./build  # Создание директории build, если она еще не существует
-        echo "test artifact" > ./build/test_file.txt  # Создание тестового файла для артефакта
-
-    - name: Verify build directory after creation
-      run: |
-        if [ -d "./microservices_project/data_bus/build" ]; then
-          echo "Build directory created successfully"
-        else
-          echo "Failed to create build directory"
-        fi
+        echo "Listing contents of build directory:"
+        ls -al ./microservices_project/data_bus/build  # Проверяем содержимое build
 
     - name: Upload build artifacts for data_bus
       uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
@@ -67,4 +59,4 @@ jobs:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
 
-  # Аналогичные шаги для order_service и user_service...
+  # Аналогичные шаги для order_service и user_service
