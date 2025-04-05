@@ -1,4 +1,4 @@
-name: CI Pipeline for Microservices Project
+name: CI for Microservices Project
 
 on:
   push:
@@ -9,32 +9,78 @@ on:
       - main
 
 jobs:
-  # Job для сборки и публикации артефактов
-  build_and_publish:
-    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu
+  # Job для data_bus
+  data_bus:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Скачиваем код из репозитория
-
-    - name: Set up Python
-      uses: actions/setup-python@v3  # Устанавливаем Python
+      uses: actions/checkout@v2
       with:
-        python-version: '3.8'  # Указываем версию Python
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip  # Обновляем pip
-        pip install -r requirements.txt  # Устанавливаем зависимости из requirements.txt
-
-    - name: Build application
-      run: |
-        echo "Building the application..."  # Пример команды сборки
-        # Например, создание архива с кодом приложения
-        tar -czf app_build.tar.gz ./  # Архивируем текущий каталог
-
-    - name: Publish build artifacts
-      uses: actions/upload-artifact@v2  # Используем стабильную версию actions/upload-artifact v2
+    - name: Set up Python for data_bus
+      uses: actions/setup-python@v2
       with:
-        name: app-build-artifacts  # Имя артефакта
-        path: app_build.tar.gz  # Путь к файлу артефакта
+        python-version: '3.8'
+
+    - name: Install dependencies for data_bus
+      working-directory: ./microservices_project/data_bus
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
+    - name: Run tests for data_bus
+      working-directory: ./microservices_project/data_bus
+      run: |
+        pytest  # Запуск тестов для data_bus
+  # Job для order_service
+  order_service:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
+
+    - name: Set up Python for order_service
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies for order_service
+      working-directory: ./microservices_project/order_service
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
+    - name: Run tests for order_service
+      working-directory: ./microservices_project/order_service
+      run: |
+        pytest  # Запуск тестов для order_service
+  # Job для user_service
+  user_service:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Обеспечивает полное клонирование репозитория
+
+    - name: Set up Python for user_service
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies for user_service
+      working-directory: ./microservices_project/user_service
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .  # Установка зависимостей из репозитория
+        pip install pytest  # Установка pytest
+    - name: Run tests for user_service
+      working-directory: ./microservices_project/user_service
+      run: |
+        pytest  # Запуск тестов для user_service
