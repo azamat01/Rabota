@@ -1,4 +1,4 @@
-name: CI for Microservices Project
+name: CI Pipeline for Microservices Project
 
 on:
   push:
@@ -9,122 +9,32 @@ on:
       - main
 
 jobs:
-  # Job для data_bus
-  data_bus:
-    runs-on: ubuntu-20.04
+  # Job для сборки и публикации артефактов
+  build_and_publish:
+    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Скачиваем код из репозитория
 
-    - name: Set up Python for data_bus
-      uses: actions/setup-python@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3  # Устанавливаем Python
       with:
-        python-version: '3.8'
+        python-version: '3.8'  # Указываем версию Python
 
-    - name: Install dependencies for data_bus
-      working-directory: ./microservices_project/data_bus
+    - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -e .
-        pip install pytest
+        python -m pip install --upgrade pip  # Обновляем pip
+        pip install -r requirements.txt  # Устанавливаем зависимости из requirements.txt
 
-    - name: Run tests for data_bus
-      working-directory: ./microservices_project/data_bus
+    - name: Build application
       run: |
-        pytest
+        echo "Building the application..."  # Пример команды сборки
+        # Например, создание архива с кодом приложения
+        tar -czf app_build.tar.gz ./  # Архивируем текущий каталог
 
-    - name: Build application for data_bus
-      working-directory: ./microservices_project/data_bus
-      run: |
-        echo "Building application for data_bus"  # Команда сборки
-        # Например, создание архива с результатами
-        tar -czf data_bus_build.tar.gz ./microservices_project/data_bus  # Пример сборки
-
-    - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v3
+    - name: Publish build artifacts
+      uses: actions/upload-artifact@v3  # Загружаем артефакты с помощью actions/upload-artifact
       with:
-        name: data_bus-artifacts  # Имя артефакта
-        path: ./microservices_project/data_bus/data_bus_build.tar.gz  # Путь к артефактам
-
-  # Другие Jobs для других микросервисов (order_service, user_service) аналогичны.
-
-  # Job для order_service
-  order_service:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
-
-    - name: Set up Python for order_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Run tests for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        pytest  # Запуск тестов для order_service
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Build application for order_service
-      working-directory: ./microservices_project/order_service
-      run: |
-        echo "Build step for order_service"  # Ваш код сборки
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Publish build artifacts for order_service
-      uses: actions/upload-artifact@v3  # Использование стабильной версии actions/upload-artifact v3
-      with:
-        name: order_service-artifacts
-        path: ./microservices_project/order_service/build  # Путь к артефактам для order_service
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-  # Job для user_service
-  user_service:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Использование последней стабильной версии actions/checkout
-
-    - name: Set up Python for user_service
-      uses: actions/setup-python@v3  # Использование последней стабильной версии actions/setup-python
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .  # Установка зависимостей из репозитория
-        pip install pytest  # Установка pytest
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Run tests for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        pytest  # Запуск тестов для user_service
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Build application for user_service
-      working-directory: ./microservices_project/user_service
-      run: |
-        echo "Build step for user_service"  # Ваш код сборки
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
-
-    - name: Publish build artifacts for user_service
-      uses: actions/upload-artifact@v3  # Использование стабильной версии actions/upload-artifact v3
-      with:
-        name: user_service-artifacts
-        path: ./microservices_project/user_service/build  # Путь к артефактам для user_service
-      continue-on-error: true  # Скрытие ошибок, чтобы не прерывать выполнение
+        name: app-build-artifacts  # Имя артефакта
+        path: app_build.tar.gz  # Путь к файлу артефакта
