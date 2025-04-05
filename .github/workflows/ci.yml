@@ -41,7 +41,7 @@ jobs:
         echo "Listing files in current directory:"
         ls -al  # Печатает список файлов в текущей директории
 
-    - name: Create build directory
+    - name: Create build directory for data_bus
       run: |
         echo "Creating build directory..."
         mkdir -p ./microservices_project/data_bus/build  # Создаём build директорию
@@ -60,3 +60,84 @@ jobs:
         path: ./microservices_project/data_bus/build  # Путь к артефактам
 
   # Аналогичные шаги для order_service и user_service
+  order_service:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python for order_service
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies for order_service
+      working-directory: ./microservices_project/order_service
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install pytest
+
+    - name: Run tests for order_service
+      working-directory: ./microservices_project/order_service
+      run: |
+        pytest
+
+    - name: Create build directory for order_service
+      run: |
+        echo "Creating build directory..."
+        mkdir -p ./microservices_project/order_service/build
+        echo "Creating test file inside build directory..."
+        echo "test artifact" > ./microservices_project/order_service/build/test_file.txt
+
+    - name: Verify build directory contents
+      run: |
+        echo "Listing contents of build directory:"
+        ls -al ./microservices_project/order_service/build
+
+    - name: Upload build artifacts for order_service
+      uses: actions/upload-artifact@v3
+      with:
+        name: order_service-artifacts
+        path: ./microservices_project/order_service/build
+
+  user_service:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python for user_service
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies for user_service
+      working-directory: ./microservices_project/user_service
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install pytest
+
+    - name: Run tests for user_service
+      working-directory: ./microservices_project/user_service
+      run: |
+        pytest
+
+    - name: Create build directory for user_service
+      run: |
+        echo "Creating build directory..."
+        mkdir -p ./microservices_project/user_service/build
+        echo "Creating test file inside build directory..."
+        echo "test artifact" > ./microservices_project/user_service/build/test_file.txt
+
+    - name: Verify build directory contents
+      run: |
+        echo "Listing contents of build directory:"
+        ls -al ./microservices_project/user_service/build
+
+    - name: Upload build artifacts for user_service
+      uses: actions/upload-artifact@v3
+      with:
+        name: user_service-artifacts
+        path: ./microservices_project/user_service/build
