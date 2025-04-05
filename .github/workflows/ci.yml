@@ -40,7 +40,7 @@ jobs:
         echo "Build step for data_bus"  # Ваш код сборки
 
     - name: Publish build artifacts for data_bus
-      uses: actions/upload-artifact@v3  # Использование версии v3
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: data_bus-artifacts
         path: ./microservices_project/data_bus/build  # Путь к артефактам
@@ -76,7 +76,7 @@ jobs:
         echo "Build step for order_service"  # Ваш код сборки
 
     - name: Publish build artifacts for order_service
-      uses: actions/upload-artifact@v3  # Использование версии v3
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: order_service-artifacts
         path: ./microservices_project/order_service/build  # Путь к артефактам для order_service
@@ -112,7 +112,7 @@ jobs:
         echo "Build step for user_service"  # Ваш код сборки
 
     - name: Publish build artifacts for user_service
-      uses: actions/upload-artifact@v3  # Использование версии v3
+      uses: actions/upload-artifact@v2  # Использование стабильной версии actions/upload-artifact v2
       with:
         name: user_service-artifacts
         path: ./microservices_project/user_service/build  # Путь к артефактам для user_service
