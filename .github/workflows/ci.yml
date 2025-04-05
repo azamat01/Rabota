@@ -33,11 +33,24 @@ jobs:
       run: |
         pytest  # Запуск тестов для data_bus
 
+    - name: Check if build directory exists before creation (data_bus)
+      working-directory: ./microservices_project/data_bus
+      run: |
+        echo "Checking if build directory exists:"
+        ls -la ./microservices_project/data_bus  # Проверка содержимого директории
+        if [ ! -d "./microservices_project/data_bus/build" ]; then
+          echo "Build directory does not exist, creating..."
+          mkdir build  # Создаем папку build, если она не существует
+        else
+          echo "Build directory already exists"
+        fi
+        ls -la ./microservices_project/data_bus  # Смотрим содержимое после проверки
+
     - name: Build application for data_bus
       working-directory: ./microservices_project/data_bus
       run: |
-        mkdir -p build  # Создаем папку build, если она не существует
-        echo "Build step for data_bus" > build/output.txt  # Записываем артефакт в build/output.txt
+        echo "Build step for data_bus"
+        echo "Building data_bus..." > build/output.txt  # Записываем файл в build
 
     - name: Publish build artifacts for data_bus
       uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
@@ -69,11 +82,24 @@ jobs:
       run: |
         pytest  # Запуск тестов для order_service
 
+    - name: Check if build directory exists before creation (order_service)
+      working-directory: ./microservices_project/order_service
+      run: |
+        echo "Checking if build directory exists:"
+        ls -la ./microservices_project/order_service  # Проверка содержимого директории
+        if [ ! -d "./microservices_project/order_service/build" ]; then
+          echo "Build directory does not exist, creating..."
+          mkdir build  # Создаем папку build, если она не существует
+        else
+          echo "Build directory already exists"
+        fi
+        ls -la ./microservices_project/order_service  # Смотрим содержимое после проверки
+
     - name: Build application for order_service
       working-directory: ./microservices_project/order_service
       run: |
-        mkdir -p build  # Создаем папку build, если она не существует
-        echo "Build step for order_service" > build/output.txt  # Записываем артефакт в build/output.txt
+        echo "Build step for order_service"
+        echo "Building order_service..." > build/output.txt  # Записываем файл в build
 
     - name: Publish build artifacts for order_service
       uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
@@ -105,11 +131,24 @@ jobs:
       run: |
         pytest  # Запуск тестов для user_service
 
+    - name: Check if build directory exists before creation (user_service)
+      working-directory: ./microservices_project/user_service
+      run: |
+        echo "Checking if build directory exists:"
+        ls -la ./microservices_project/user_service  # Проверка содержимого директории
+        if [ ! -d "./microservices_project/user_service/build" ]; then
+          echo "Build directory does not exist, creating..."
+          mkdir build  # Создаем папку build, если она не существует
+        else
+          echo "Build directory already exists"
+        fi
+        ls -la ./microservices_project/user_service  # Смотрим содержимое после проверки
+
     - name: Build application for user_service
       working-directory: ./microservices_project/user_service
       run: |
-        mkdir -p build  # Создаем папку build, если она не существует
-        echo "Build step for user_service" > build/output.txt  # Записываем артефакт в build/output.txt
+        echo "Build step for user_service"
+        echo "Building user_service..." > build/output.txt  # Записываем файл в build
 
     - name: Publish build artifacts for user_service
       uses: actions/upload-artifact@v2  # Используем стабильную версию upload-artifact
